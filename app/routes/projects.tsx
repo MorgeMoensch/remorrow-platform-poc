@@ -6,7 +6,7 @@ export const loader = async ({request}:ActionFunctionArgs) => {
 
     const { supabaseClient, headers } = createSupabaseServerClient(request)
 
-    const data = await supabaseClient.from("projects").select();
+    const data = await supabaseClient.from("users").select();
 
     return {data};
 };
