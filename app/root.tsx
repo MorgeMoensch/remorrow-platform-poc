@@ -10,9 +10,11 @@ import {
 } from "@remix-run/react";
 import {createBrowserClient} from "@supabase/ssr";
 import {useEffect, useState} from "react";
+import Navbar from "./components/Navbar";
+import stylesheet from "./tailwind.css";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: stylesheet}
 ];
 
 export const loader = () => {
@@ -72,6 +74,7 @@ export default function App() {
         <button onClick={signUp}>Sing Up</button>
         <button onClick={signIn}>Sing In</button>
         <button onClick={signOut}>Sing Out</button>
+        <Navbar />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

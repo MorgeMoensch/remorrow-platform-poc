@@ -13,5 +13,10 @@ export const loader = async ({request}:ActionFunctionArgs) => {
 
 export default function Projects() {
     const data = useLoaderData();
-    return <pre>{JSON.stringify(data, null, 2)}</pre>
-}
+    return <>
+        <h1 className="text-3xl font-bold underline">
+            Hello world!
+        </h1>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+        </>
+        }
