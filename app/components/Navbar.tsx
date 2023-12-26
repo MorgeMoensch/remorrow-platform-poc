@@ -10,6 +10,7 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import {NavLink} from "@remix-run/react";
 
 const products = [
     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -34,10 +35,10 @@ export default function Navbar() {
         <header className="bg-white">
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <NavLink to="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">Your Company</span>
-                        <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
-                    </a>
+                        <img className="h-8 w-auto" src="https://remorrow.world/icon@192.png" alt="" />
+                    </NavLink>
                 </div>
                 <div className="flex lg:hidden">
                     <button
@@ -104,17 +105,17 @@ export default function Navbar() {
                     <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
                         Features
                     </a>
-                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                        Marketplace
-                    </a>
-                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                        Company
-                    </a>
+                    <NavLink to="projects" className="text-sm font-semibold leading-6 text-gray-900">
+                        Projects
+                    </NavLink>
+                    <NavLink to="https://remorrow.world/" className="text-sm font-semibold leading-6 text-gray-900">
+                        Our Vision
+                    </NavLink>
                 </Popover.Group>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                    <NavLink to="login" className="text-sm font-semibold leading-6 text-gray-900">
                         Log in <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    </NavLink>
                 </div>
             </nav>
             <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -186,12 +187,12 @@ export default function Navbar() {
                                 </a>
                             </div>
                             <div className="py-6">
-                                <a
-                                    href="#"
+                                <NavLink
+                                    to="login"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
                                     Log in
-                                </a>
+                                </NavLink>
                             </div>
                         </div>
                     </div>
