@@ -1,17 +1,5 @@
-/*
-  This example requires some changes to your config:
+import { NavLink } from "@remix-run/react";
 
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 export default function Example() {
     return (
         <>
@@ -88,9 +76,9 @@ export default function Example() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
-                        <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            Start a 14 day free trial
-                        </a>
+                        <NavLink to="/signup" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                            Sign up for free!
+                        </NavLink>
                     </p>
                 </div>
             </div>
