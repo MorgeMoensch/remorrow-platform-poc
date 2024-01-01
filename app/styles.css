@@ -1,0 +1,24 @@
+.header-image {
+    min-height: 18em;
+    max-height: 30vh;
+    width: 100vw;
+    object-fit: cover;
+    object-position: 0 15%;
+}
+
+section {
+    margin-top: -5em;
+    background: white;
+    border-radius: 2em;
+    height: fit-content;
+    min-height: 20em;
+    position: relative;
+    padding-top: 3em;
+    padding-left: 3em;
+}
+
+#project-overview-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
