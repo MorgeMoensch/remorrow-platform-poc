@@ -22,3 +22,19 @@ section {
     flex-wrap: wrap;
     gap: 1em;
 }
+
+.project-card {
+    overflow: hidden;
+    height: 20rem;
+    width: 15rem;
+    border: solid 2px lightgray;
+    border-radius: 1.5rem;
+    padding: 1rem;
+}
+
+.project-card > img {
+    width: 15em;
+    margin-left: -1rem;
+    margin-top: -1rem;
+    max-width: unset;
+}

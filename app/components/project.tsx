@@ -1,6 +1,9 @@
 export default function Project({title}) {
     return <>
-    <div style={{height: "20em", width: "15em", border: "solid 1px gray", borderRadius: "1.5em", padding: "2em" }}>
-        <h2>{title}</h2>
+    <div className={"project-card"}>
+        <img
+            style={{width: "15em"}}
+            src={"https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"} />
+        <h2 className={"font-semibold text-gray-900"}>{title}</h2>
     </div></>
 }
