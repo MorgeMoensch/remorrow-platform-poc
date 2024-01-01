@@ -1,9 +1,38 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { Form } from '@remix-run/react'
+import {createServerClient, parse, serialize} from "@supabase/ssr";
+
+
+export async function action({ request }) {
+    let formData = await request.formData();
+    let values = Object.fromEntries(formData);
+
+    const cookies = parse(request.headers.get('Cookie') ?? '');
+    const headers = new Headers();
+    const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+        cookies: {
+            get(key) {
+                return cookies[key]
+            },
+            set(key, value, options) {
+                headers.append('Set-Cookie', serialize(key, value, options))
+            },
+            remove(key, options) {
+                headers.append('Set-Cookie', serialize(key, '', options))
+            },
+        },
+    });
+
+    return await supabase.auth.signUp({
+        email: values.email,
+        password: values.password
+    });
+}
 
 export default function Example() {
     return (
         <div style={{width: "60vw", position: "absolute", left: "50%", transform: "translateX(-50%)", marginTop: "4em"}}>
-            <form>
+            <Form method="post">
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
@@ -131,7 +160,7 @@ export default function Example() {
                         Save
                     </button>
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }
