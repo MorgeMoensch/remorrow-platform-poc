@@ -1,6 +1,37 @@
-import { NavLink } from "@remix-run/react";
+import {NavLink, useLoaderData} from "@remix-run/react";
+import {createBrowserClient, createServerClient, parse, serialize} from "@supabase/ssr";
+import {useState} from "react";
+
+export const loader = () => {
+    const env = {
+        SUPABASE_URL: process.env.SUPABASE_URL!,
+        SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!
+    };
+
+    return { env };
+};
 
 export default function Example() {
+    const { env } = useLoaderData();
+    const [supabase] = useState(() => createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY));
+
+    const signIn = async () => {
+        let email = document.getElementById("email")!.value;
+        let password = document.getElementById("password")!.value;
+        var response = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if(response.error != null) {
+            console.error("some error happened")
+        }
+    };
+
+    const signOut = () => {
+        supabase.auth.signOut();
+    };
+
     return (
         <>
             {/*
@@ -66,7 +97,7 @@ export default function Example() {
 
                         <div>
                             <button
-                                type="submit"
+                                onClick={signIn}
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Sign in
