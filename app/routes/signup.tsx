@@ -1,11 +1,22 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { Form } from '@remix-run/react'
-import {createServerClient, parse, serialize} from "@supabase/ssr";
+import {Form, useLoaderData} from '@remix-run/react'
+import {createBrowserClient, createServerClient, parse, serialize} from "@supabase/ssr";
+import {useState} from "react";
+
+
+export const loader = () => {
+    const env = {
+        SUPABASE_URL: process.env.SUPABASE_URL!,
+        SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!
+    };
+
+    return { env };
+};
 
 
 export async function action({ request }) {
-    let formData = await request.formData();
-    let values = Object.fromEntries(formData);
+    const formData = await request.formData();
+    const values = Object.fromEntries(formData);
 
     const cookies = parse(request.headers.get('Cookie') ?? '');
     const headers = new Headers();
@@ -22,35 +33,66 @@ export async function action({ request }) {
             },
         },
     });
+    console.log("mooooohooooin")
 
-    return await supabase.auth.signUp({
-        email: values.email,
-        password: values.password
-    });
+    console.log(values)
+
+    const { error, data } = await supabase.from('profiles').insert({
+        user_id: values.userId, first_name: values.firstName, last_name: values.lastName, about: values.about
+    }).select()
+
+    console.log(data)
+    console.log(error)
+    console.log(data)
+    console.log(data)
+
+    return error === null
 }
 
 export default function Example() {
+    const { env } = useLoaderData();
+    const [supabase] = useState(() => createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY));
+
+    const signUp = async () => {
+        const email = document.getElementById("email")!.value;
+        const password = document.getElementById("password")!.value;
+        
+        const { error, data } = await supabase.auth.signUp({
+            email: email,
+            password: password
+        });
+
+        console.log(data)
+        console.log(error)
+
+            document.getElementById('userId')!.value = data!.user?.id!;
+            document.getElementById('register-form')!.submit();
+        console.log("hie isch finito.");
+
+    };
+    
     return (
         <div style={{width: "60vw", position: "absolute", left: "50%", transform: "translateX(-50%)", marginTop: "4em"}}>
-            <Form method="post">
+            <Form method="post" id="register-form">
                 <div className="space-y-12">
                     <div className="border-b border-gray-900/10 pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
                         <p className="mt-1 text-sm leading-6 text-gray-600">
                             This information will be displayed publicly so be careful what you share.
                         </p>
+                        <input type="text" name="userId" id="userId" />
 
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 border-b border-gray-900/10 pb-12">
                             <div className="sm:col-span-3">
-                                <label htmlFor="first-name"
+                                <label htmlFor="firstName"
                                        className="block text-sm font-medium leading-6 text-gray-900">
                                     First name
                                 </label>
                                 <div className="mt-2">
                                     <input
                                         type="text"
-                                        name="first-name"
-                                        id="first-name"
+                                        name="firstName"
+                                        id="firstName"
                                         autoComplete="given-name"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -59,15 +101,15 @@ export default function Example() {
 
 
                             <div className="sm:col-span-3">
-                                <label htmlFor="last-name"
+                                <label htmlFor="lastName"
                                        className="block text-sm font-medium leading-6 text-gray-900">
                                     Last name
                                 </label>
                                 <div className="mt-2">
                                     <input
                                         type="text"
-                                        name="last-name"
-                                        id="last-name"
+                                        name="lastName"
+                                        id="lastName"
                                         autoComplete="family-name"
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     />
@@ -154,7 +196,7 @@ export default function Example() {
                         Cancel
                     </button>
                     <button
-                        type="submit"
+                        onClick={signUp}
                         className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         Save
