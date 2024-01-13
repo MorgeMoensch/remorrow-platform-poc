@@ -37,4 +37,6 @@ section {
     margin-left: -1rem;
     margin-top: -1rem;
     max-width: unset;
+    height: 160px;
+    object-fit: cover;
 }
