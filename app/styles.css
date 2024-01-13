@@ -6,6 +6,14 @@
     object-position: 0 15%;
 }
 
+.header-image-big {
+    min-height: 30em;
+    max-height: 50vh;
+    width: 100vw;
+    object-fit: cover;
+    object-position: 0 15%;
+}
+
 section {
     margin-top: -5em;
     background: white;
@@ -15,6 +23,7 @@ section {
     position: relative;
     padding-top: 3em;
     padding-left: 3em;
+    padding-right: 3em;
 }
 
 #project-overview-wrapper {
@@ -39,4 +48,10 @@ section {
     max-width: unset;
     height: 160px;
     object-fit: cover;
+}
+
+.remorrow-border {
+    border: solid 2px lightgray;
+    border-radius: 1.5rem;
+    padding: 2rem;
 }
