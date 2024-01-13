@@ -1,4 +1,4 @@
-export default function Project({title}) {
+export default function ProjectOverviewCard({title}) {
 
     const getRandomImage = () => {
         const imageUrls = [
