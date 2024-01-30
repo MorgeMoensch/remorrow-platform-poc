@@ -1,6 +1,8 @@
 import {LoaderFunctionArgs} from "@remix-run/router";
 import {useLoaderData} from "@remix-run/react";
 
+import mailIconUrl from "../../assets/mail-logo.png"
+
 export async function loader({params,}: LoaderFunctionArgs) {
     return params.projectId;
 }
@@ -69,8 +71,9 @@ export default function ProjectDetailsPage() {
                     marginBottom: "2rem"
                 }}
                      src={"https://images.unsplash.com/photo-1546961329-78bef0414d7c?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}/>
-                <p>Melissa Hunziker</p>
+                <p><b>Melissa Hunziker</b></p>
                 <p>Gründerin Öko-GmbH</p>
+                <div style={{marginTop: "0.5rem"}}><img src={mailIconUrl} alt={"Mail Icon Logo"} style={{width: "1.5rem", display: "inline", verticalAlign: "middle"}}/> Melissa kontaktieren</div>
             </div>
 
         </section>
