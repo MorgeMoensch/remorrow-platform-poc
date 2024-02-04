@@ -13,7 +13,7 @@ export default function ProjectDetailsPage() {
         <img className={"header-image-big"}
              src={"https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?q=80&w=1942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}/>
         <section style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between", maxWidth: "100%", marginBottom: "2rem"}}>
-            <h1 className="text-3xl font-bold" style={{marginBottom: "2rem", width: "100%"}}>Project Title</h1>
+            <h1 className="text-3xl font-bold" style={{marginBottom: "2rem", width: "100%"}}>Wildbienen-Hotels bauen</h1>
             <div style={{width: "60%"}} className={"remorrow-border"}>
                 <h2 className="text-xl font-bold">Beschreibung</h2>
                 <p>
@@ -31,33 +31,13 @@ export default function ProjectDetailsPage() {
                     elit
                     sodales elit, et congue leo leo ut eros. Etiam a fringilla nunc. Mauris scelerisque purus ut nibh
                     molestie malesuada.</p>
-                <p>
-                    Interdum et malesuada fames ac ante ipsum primis in faucibus. Vestibulum molestie ex felis, ornare
-                    faucibus dui congue non. Maecenas posuere ante ac imperdiet porttitor. Quisque interdum finibus ex,
-                    in
-                    convallis diam malesuada quis. Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-                    per
-                    inceptos himenaeos. Praesent enim leo, sodales vel tincidunt et, suscipit sed est. Sed consectetur
-                    erat
-                    in dignissim eleifend. Nullam ultrices, erat a tristique accumsan, lorem orci suscipit tortor, a
-                    tincidunt turpis nibh nec lacus. Fusce ac risus erat. Sed porttitor ligula diam, quis auctor ex
-                    semper
-                    in.
-                </p>
-                <p>
-                    Phasellus eu nibh eu nisl auctor eleifend. Nulla metus mauris, tincidunt nec neque quis, lobortis
-                    fringilla risus. Praesent tempus erat non odio malesuada, quis semper ante lobortis. In faucibus ac
-                    ligula eget mattis. Curabitur vel dui nec risus malesuada suscipit in id libero. Vivamus mattis,
-                    nunc et
-                    consequat luctus, dui leo tristique justo, eu sodales metus quam nec metus. Nunc sit amet sem
-                    sapien.
-                    Nullam vel mi venenatis, rhoncus erat nec, pharetra mauris. Vivamus condimentum nibh at auctor
-                    dignissim. Pellentesque maximus porttitor elit, mollis ultricies risus. Sed arcu lorem, hendrerit ut
-                    dolor ut, rhoncus imperdiet metus. Fusce eget accumsan neque, et sagittis ante. Duis vehicula metus
-                    sed
-                    nisi ornare, vel convallis dolor tincidunt. Vivamus sapien dolor, imperdiet ut semper dapibus,
-                    mollis
-                    elementum enim. Proin ultricies ultricies lectus non interdum. </p>
+                <h2 className="text-xl font-bold" style={{marginTop: "2rem"}}>Eckdaten</h2>
+                <ul>
+                    <li><b>Wann: </b>7. September 2024</li>
+                    <li><b>Wo: </b>Dorfstrasse 23, 1234 Hintertupfigen</li>
+                    <li><b>Anforderungen: </b>Freude an der Natur</li>
+                    <li><b>Entschädigung: </b>Keine</li>
+                </ul>
             </div>
             <div className={"remorrow-border"} style={{width: "30%"}}>
                 <h2 className="text-xl font-bold">Autor</h2>
