@@ -30,6 +30,7 @@ section {
     display: flex;
     flex-wrap: wrap;
     gap: 1em;
+    justify-content: space-between;
 }
 
 .project-card {
