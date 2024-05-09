@@ -1,6 +1,8 @@
-import {NavLink, useLoaderData} from "@remix-run/react";
+import {Form, json, NavLink, redirect, useActionData, useLoaderData} from "@remix-run/react";
 import {createBrowserClient, createServerClient, parse, serialize} from "@supabase/ssr";
 import {useState} from "react";
+import type {ActionFunctionArgs, LoaderFunctionArgs} from "@remix-run/node";
+import {createSupabaseServerClient} from "~/supabase.server";
 
 export const loader = () => {
     const env = {
@@ -11,11 +13,43 @@ export const loader = () => {
     return { env };
 };
 
+export const action = async ({ request }: ActionFunctionArgs) => {
+    const { supabaseClient, headers } = createSupabaseServerClient(request)
+
+    const formData = await request.formData()
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+        email: formData.get('email') as string,
+        password: formData.get('password') as string
+    });
+
+    /*
+    const { error } = await supabaseClient.auth.signInWithOtp({
+        email: formData.get('email') as string,
+        options: {
+            emailRedirectTo: 'http://localhost:3000/auth/callback',
+        },
+    })*/
+    console.log(error)
+
+    // just for this example
+    // if there is no error, we show "Please check you email" message
+    if (error) {
+        return json({ success: false }, { headers })
+    }
+
+    return redirect ('/')
+    //return json({ success: true }, { headers })
+}
+
 export default function Example() {
     const { env } = useLoaderData();
     const [supabase] = useState(() => createBrowserClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY));
+    const actionResponse = useActionData<typeof action>()
 
+    /*
     const signIn = async () => {
+        console.log("signIn")
         let email = document.getElementById("email")!.value;
         let password = document.getElementById("password")!.value;
         var response = await supabase.auth.signInWithPassword({
@@ -30,7 +64,7 @@ export default function Example() {
 
     const signOut = () => {
         supabase.auth.signOut();
-    };
+    };*/
 
     return (
         <>
@@ -55,7 +89,7 @@ export default function Example() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <Form className="space-y-6" method="post">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -97,13 +131,13 @@ export default function Example() {
 
                         <div>
                             <button
-                                onClick={signIn}
+                                type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
                                 Sign in
                             </button>
                         </div>
-                    </form>
+                    </Form>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Not a member?{' '}
