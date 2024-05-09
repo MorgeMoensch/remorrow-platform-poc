@@ -1,9 +1,35 @@
-import { Form, useOutletContext } from "@remix-run/react";
+import {Form, redirect, useOutletContext} from "@remix-run/react";
+import {createServerClient, parse, serialize} from "@supabase/ssr";
+import {createSupabaseServerClient} from "~/supabase.server";
 
+export async function action({ request }) {
+    const formData = await request.formData();
+    const values = Object.fromEntries(formData);
+
+    const { supabaseClient, headers } = createSupabaseServerClient(request)
+    console.log("mooooohooooin")
+
+    console.log(values)
+
+    const { error, data } = await supabaseClient.from('projects').insert({
+        title: values.title, description: values.description, support_needs: values.supportNeeds, facts: values.facts
+    }).select()
+
+    console.log(data)
+    console.log(error)
+    console.log(data)
+
+    if(error === null && data !== null) {
+        const createdProjectId = data[0].id;
+        return redirect (`/projects/${createdProjectId}`)
+    }
+
+    return redirect ('/')
+}
 export default function Add() {
     return <>
         <div style={{width: "60vw", position: "absolute", left: "50%", transform: "translateX(-50%)", marginTop: "4em", marginBottom: "3em"}} className={"remorrow-border"}>
-        <form>
+        <Form method="post">
             <div className="space-y-12">
                 <div className="border-b border-gray-900/10 pb-12">
                     <h1 className="text-base font-semibold leading-7 text-gray-900">Add new project</h1>
@@ -35,10 +61,10 @@ export default function Add() {
                         </div>
 
                         <div className="col-span-full">
-                            <label htmlFor="support-needs"
+                            <label htmlFor="supportNeeds"
                                    className="block text-sm font-medium leading-6 text-gray-900">Wo brauchst du Unterstützung? *</label>
                             <div className="mt-2">
-                                <textarea id="support-needs" name="support-needs" rows="3"
+                                <textarea id="supportNeeds" name="supportNeeds" rows="3"
                                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
                             </div>
                             <p className="mt-3 text-sm leading-6 text-gray-600">Wie können dir andere Leute oder Unternehmen helfen?</p>
@@ -90,7 +116,7 @@ export default function Add() {
                 </div>
             </div>
 
-        </form>
+        </Form>
         </div>
     </>
 }
