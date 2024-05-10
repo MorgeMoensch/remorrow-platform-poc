@@ -1,4 +1,6 @@
-export default function ProjectOverviewCard({title}) {
+import {Link} from "@remix-run/react";
+
+export default function ProjectOverviewCard({title, id}) {
 
     const getRandomImage = () => {
         const imageUrls = [
@@ -18,10 +20,10 @@ export default function ProjectOverviewCard({title}) {
     }
 
     return <>
-    <div className={"project-card"}>
+    <Link className={"project-card"} to={`/projects/${id}`}>
         <img
             style={{width: "15em"}}
             src={getRandomImage()} />
         <h2 className={"font-semibold text-gray-900"}>{title}</h2>
-    </div></>
+    </Link></>
 }
